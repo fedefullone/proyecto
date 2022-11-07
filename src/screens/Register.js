@@ -18,6 +18,14 @@ class Register extends Component {
             errors: ''
     }
 }
+componentDidMount(){ 
+    auth.onAuthStateChanged(
+     user => {
+        if (user){
+            this.props.navigation.navigate('Home')
+        }
+     })
+}
 
 registrar(email,password, username, bio, foto){
     auth.createUserWithEmailAndPassword(email,password)
@@ -56,14 +64,14 @@ registrar(email,password, username, bio, foto){
                 <View>
                     <TextInput
                     //style={styles.field}
-                    placeholder='email'
+                    placeholder='Email'
                     keyboardType='email-address'
                     onChangeText={ text => this.setState({email:text})}
                     value={this.state.email}
                     />
                     <TextInput
                     //style={styles.field}
-                    placeholder='password'
+                    placeholder='Password'
                     keyboardType='default'
                     onChangeText={ text => this.setState({password:text})}
                     value={this.state.password}
@@ -71,14 +79,14 @@ registrar(email,password, username, bio, foto){
                     />
                     <TextInput
                     //style={styles.field}
-                    placeholder='username'
+                    placeholder='Username'
                     keyboardType='default'
                     onChangeText={ text => this.setState({username:text})}
                     value={this.state.username}
                     />
                     <TextInput
                     //style={styles.field}
-                    placeholder='bio'
+                    placeholder='Bio'
                     keyboardType='default'
                     onChangeText={ text => this.setState({bio:text})}
                     value={this.state.bio}

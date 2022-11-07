@@ -1,40 +1,78 @@
 import React, {Component} from 'react';
+import {auth, db} from '../firebase/config';
+
 import {View,
         Text,
         TextInput,
         TouchableOpacity,
         StyleSheet} from 'react-native'
 
-class Login extends Component {
-    constructor(){ 
+ class Login extends Component {
+    constructor(){
         super()
         this.state = {
-            email: '',
-            password: '',
-            username: '',
-            bio: '',
-            foto: '',
-            errors: ''
-    }
-}
+            email: "",
+            password: "",
+            error: ""
+                }
+            }
+        
+login(email, password){
+        auth.signInWithEmailAndPassword(email, password)
+            .then( res => {
+                        this.props.navigation.navigate('Home')
+                    })
+                    .catch(error => {
+                        this.setState({error: 'Credenciales inválidas.'})
+                      })
+            }
 
-    render(){
-        return(
-            <View> 
-                <Text>Login</Text>
-                <View>
-                    <TextInput
-                    style={styles.field}
-                    placeholder='email'
-                    keyboardType='email-address'
-                    onChangeText={ text => this.setState({email:text})}
-                    value={this.state.email}
-                    />
-                </View>
-            </View>
-        )
 
+        
+            render(){
+                return(
+                    <View>
+        
+                    <Text>{this.state.error}</Text>
+        
+                        <Text>Login</Text>
+        
+                        <View>
+                        <Text>{this.state.error}</Text>
+                            <TextInput 
+                                placeholder= 'Email'
+                                keyboardType= 'email-address'
+                                onChangeText={ texto => this.setState({email : texto})}
+                                value = {this.state.email}
+                                
+                            />
+                            <TextInput 
+                                placeholder= 'Password'
+                                keyboardType= 'default'
+                                secureTextEntry = {true}
+                                onChangeText={ texto => this.setState({password : texto})}
+                                value = {this.state.password}
+                             
+                            />            
+        
+        
+        {
+                        this.state.email =="" || this.state.password =="" ? 
+                            <TouchableOpacity>
+                                <Text>Ingresar</Text>
+                            </TouchableOpacity>
+                        :
+                            <TouchableOpacity onPress={ () => this.login (this.state.email, this.state.password)} >
+                                <Text>Ingresar</Text>
+                            </TouchableOpacity>
         }
-}
-
-export default Login;
+        
+                            <Text onPress={ () => this.props.navigation.navigate ('Register')}>¿Todavia no tenés una cuenta? Registrate</Text>
+                        </View>
+                    </View>
+                )
+            }
+        }
+        
+        
+        export default Login;
