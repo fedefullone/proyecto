@@ -98,6 +98,7 @@ registrar(email,password, username, bio, foto){
                     </TouchableOpacity> 
 
                 </View>
+                <Text onPress={ () => this.props.navigation.navigate ('Login')}> ¿Ya tenes cuenta? Ingreasa</Text>
             </View>
         )
         }

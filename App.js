@@ -14,6 +14,7 @@ function App() {
   
     return (
       <NavigationContainer>
+
         <Stack.Navigator>
         <Stack.Screen name="Register" component={ Register } options={{headerShown: false}} />
         <Stack.Screen name="Login" component={ Login } options={{headerShown: false}} />
@@ -22,5 +23,4 @@ function App() {
       </NavigationContainer>
     );
 }
-
 export default App;

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import {Text, View, StyleSheet, Image } from 'react-native'
+import {Text, 
+        View, 
+        TouchableOpacity,
+        StyleSheet, 
+        Image } from 'react-native'
+import {auth, db} from '../firebase/config';
+import Perfil from './Perfil';
 
 
 class Home extends Component {
@@ -8,14 +14,15 @@ class Home extends Component {
         this.state = { 
         }
     }
-
-    
+ 
 
     render(){
         return(
 
             <View>
-                <Text> Home</Text>
+                <Text>Home</Text> 
+             <Perfil/>
+
             </View>
 
         )
