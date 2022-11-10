@@ -26,8 +26,20 @@ login(email, password){
                         this.setState({error: 'Credenciales inválidas.'})
                       })
             }
+            
+            componentDidMount(){ 
+                auth.onAuthStateChanged(
+                 user => {
+                    if (user){
+                        this.props.navigation.navigate('Home')
+                    }
+                 })
+            }
 
-
+        
+        
+        
+        
         
             render(){
                 return(

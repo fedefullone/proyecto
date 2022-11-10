@@ -13,7 +13,8 @@ class Perfil extends Component {
     constructor(){
         super();
         this.state = { 
-            users:[]
+            misDatos:{},
+            id:''
         }
     }
 
@@ -23,38 +24,29 @@ class Perfil extends Component {
     } 
 
     componentDidMount(){
-        db.collection('users').onSnapshot(
-            docs => {
-                let users = [];
-                docs.forEach( doc => { 
-                    users.push({// vamos a recorrer doc, y va metiendo un objeto literal en el array vacio (users)
-                        id: doc.id,
-                        data: doc.data()
-                    })
-                    this.setState({
-                        users: users
-                    })
-                })
-                
-            }
-        )
-
-
+      db.collection('users')
+      .where('email', '==', auth.currentUser.email)
+      .onSnapshot(doc => {
+          doc.forEach(doc => this.setState({
+              id: doc.id,
+              misDatos: doc.data()
+          }))
+      })
     }
     render(){
         return(
 
             <View>
             <Text>Mi Perfil</Text>
+            <Text>Username: {this.state.misDatos.username}</Text>
+            <Text>Email: {this.state.misDatos.owner}</Text>
+            <Text>Bio: {this.state.misDatos.bio}</Text>
+            <View>
             <TouchableOpacity onPress={() => this.logout()}>
-                 <Text>Logout</Text>   
+                 <Text>Cerrar sesion</Text>   
             </TouchableOpacity>
-            <FlatList 
-                    data={this.state.users}
-                    keyExtractor={ oneUser => oneUser.id.toString()}
-                    renderItem={ ({item}) => <Text> {item.data.owner } </Text>}
-                /> 
-
+            
+</View>
         </View>
             //Nombre de usuario
             //Email
