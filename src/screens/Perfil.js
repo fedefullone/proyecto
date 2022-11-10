@@ -24,8 +24,7 @@ class Perfil extends Component {
     } 
 
     componentDidMount(){
-      db.collection('users')
-      .where('email', '==', auth.currentUser.email)
+      db.collection('users').where('email', '==', auth.currentUser.email)
       .onSnapshot(doc => {
           doc.forEach(doc => this.setState({
               id: doc.id,
