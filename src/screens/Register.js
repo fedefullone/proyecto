@@ -22,6 +22,13 @@ class Register extends Component {
 
 
 registrar(email,password, username, bio, foto){
+    if (this.state.email === '') {
+        this.setState({ errors: 'Tiene que ingresar un email' })
+    } else if (this.state.password === '') {
+        this.setState({ errors: 'Tiene que ingresar una password' })
+    } else if (this.state.username === '') {
+        this.setState({ errors: 'Tiene que ingresar un username' })
+    } else {
     auth.createUserWithEmailAndPassword(email,password)
         .then(res =>{
                 db.collection('users').add({
@@ -48,7 +55,7 @@ registrar(email,password, username, bio, foto){
             this.setState({
             errors: `Error: ${error.message}`
         })
-        )}
+        )}}
 
     render(){
         return(
@@ -91,11 +98,18 @@ registrar(email,password, username, bio, foto){
                     onChangeText={ text => this.setState({bio:text})}
                     value={this.state.bio}
                     />
+                    <TextInput
+                    style={styles.field}
+                    placeholder='Foto'
+                    keyboardType='default'
+                    onChangeText={ text => this.setState({foto:text})}
+                    value={this.state.bio}
+                    />
                     
                     <Text style={styles.error}>{this.state.errors}</Text>
 
                     <TouchableOpacity onPress={() => this.registrar(this.state.email,this.state.password,this.state.username,this.state.bio,this.state.foto)}>
-                        <Text style={styles.login}> Login </Text> 
+                        <Text style={styles.login}> Registrar </Text> 
                     </TouchableOpacity> 
 
                 </View>
@@ -113,7 +127,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     titulo: {
-        fontFamily: 'Arial',
+        fontFamily: 'Thonburi',
         fontSize: 35,
         fontWeight: 'bold',
         textTransform: 'uppercase',
@@ -128,14 +142,14 @@ const styles = StyleSheet.create({
     },
     
     login:{
-        fontFamily: 'Arial',
+        fontFamily: 'Thonburi',
         fontSize: 30,
         margin: 10,
         textAlign: 'center',
         color: 'grey'
     },
     field: {
-        fontFamily: 'Arial',
+        fontFamily: 'Thonburi',
         backgroundColor: '#ECF5DB',
         fontSize: 20,
         margin: 10,
@@ -151,7 +165,7 @@ const styles = StyleSheet.create({
     error:{
         fontSize: 16,
         color: 'white',
-        fontFamily: 'Arial'
+        fontFamily: 'Thonburi'
     }
     
 })

@@ -5,7 +5,7 @@ import {Text,
         StyleSheet, 
         Image } from 'react-native'
 import {auth, db} from '../firebase/config';
-import Perfil from './Perfil';
+
 
 
 class Home extends Component {
@@ -26,7 +26,7 @@ class Home extends Component {
                     resizeMode = 'contain'
                 />
                 <Text style={styles.titulo}>Home</Text> 
-             <Perfil/>
+            
 
             </View>
 

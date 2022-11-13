@@ -6,6 +6,10 @@ import {Text,
         StyleSheet,
         Image } from 'react-native'
 import {auth, db} from '../firebase/config';
+//Iconos
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 
 
@@ -23,14 +27,21 @@ class Perfil extends Component {
         this.props.navigation.navigate('Login')
     } 
 
-    componentDidMount(){
-      db.collection('users').where('email', '==', auth.currentUser.email)
-      .onSnapshot(doc => {
-          doc.forEach(doc => this.setState({
-              id: doc.id,
-              misDatos: doc.data()
-          }))
-      })
+    componentDidMount() {
+        db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
+            docs => {
+                let datos = [];
+                docs.forEach(doc => {
+                    datos.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        misDatos: datos
+                    })
+                })
+            }
+        )
     }
     render(){
         return(
@@ -42,13 +53,23 @@ class Perfil extends Component {
                     resizeMode = 'contain'
                 /> 
             <Text style={styles.titulo}>Mi Perfil</Text>
-            <Text style={styles.datos}>Username: {this.state.misDatos.username}</Text>
-            <Text style={styles.datos}>Email: {this.state.misDatos.owner}</Text>
-            <Text style={styles.datos}>Bio: {this.state.misDatos.bio}</Text>
-            <Text style={styles.datos}>Cantidad de posteos: </Text>
+            <FlatList
+            data={this.state.misDatos}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={
+                ({item}) =>
+ <View>
+           <AntDesign name="user" size={24} color="black" /> <Text style={styles.datos}>Username: {item.data.username}</Text>
+           <MaterialIcons name="email" size={24} color="black" /><Text style={styles.datos}>Email: {item.data.owner}</Text>
+           <MaterialCommunityIcons name="car-info" size={24} color="black" /><Text style={styles.datos}>Bio: {item.data.bio}</Text>
+           <MaterialCommunityIcons name="post" size={24} color="black" /><Text style={styles.datos}>Cantidad de posteos: </Text>
+            </View>
+            }
+            />
+           
             <View>
             <TouchableOpacity onPress={() => this.logout()}>
-                 <Text style={styles.logout}>Cerrar sesion</Text>   
+            <MaterialIcons name="logout" size={24} color="black" /> <Text style={styles.logout}>Cerrar sesion</Text>   
            </TouchableOpacity>
          </View>
          </View>
@@ -72,7 +93,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     titulo: {
-        fontFamily: 'Arial',
+        fontFamily: 'Thonburi',
         fontSize: 35,
         fontWeight: 'bold',
         textTransform: 'uppercase',
@@ -81,16 +102,16 @@ const styles = StyleSheet.create({
         
     },
     datos: {
-        fontFamily: 'Arial',
+        fontFamily: 'Thonburi',
         fontSize: 20,
-        color: 'grey'
+        color: '#55706E'
     },
     logout:{
-        fontFamily: 'Arial',
+        fontFamily: 'Thonburi',
         fontSize: 30,
         margin: 10,
         textAlign: 'center',
-        color: 'grey'
+        color: '#55706E'
     },
     foto:{
         height: 150,

@@ -21,7 +21,7 @@ import {View,
 login(email, password){
         auth.signInWithEmailAndPassword(email, password)
             .then( res => {
-                        this.props.navigation.navigate('Home')
+                        this.props.navigation.navigate('HomeMenu')
                     })
                     .catch(error => {
                         this.setState({error: 'Credenciales inválidas.'})
@@ -32,7 +32,7 @@ login(email, password){
                 auth.onAuthStateChanged(
                  user => {
                     if (user){
-                        this.props.navigation.navigate('Home')
+                        this.props.navigation.navigate('HomeMenu')
                     }
                  })
             }
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
                 alignItems: 'center'
             },
             titulo: {
-                fontFamily: 'Arial',
+                fontFamily: 'Thonburi',
                 fontSize: 35,
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
@@ -117,14 +117,14 @@ const styles = StyleSheet.create({
             },
             
             login:{
-                fontFamily: 'Arial',
+                fontFamily: 'Thonburi',
                 fontSize: 30,
                 margin: 10,
                 textAlign: 'center',
                 color: 'grey'
             },
             field: {
-                fontFamily: 'Arial',
+                fontFamily: 'Thonburi',
                 backgroundColor: '#ECF5DB',
                 fontSize: 20,
                 margin: 10,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
             error:{
                 fontSize: 16,
                 color: 'white',
-                fontFamily: 'Arial'
+                fontFamily: 'Thonburi'
             }
             
         })
