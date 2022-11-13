@@ -35,18 +35,23 @@ class Perfil extends Component {
     render(){
         return(
 
-            <View>
-            <Text>Mi Perfil</Text>
-            <Text>Username: {this.state.misDatos.username}</Text>
-            <Text>Email: {this.state.misDatos.owner}</Text>
-            <Text>Bio: {this.state.misDatos.bio}</Text>
+            <View style={styles.container}>
+                <Image 
+                    style = {styles.foto} 
+                    source = {require('../../assets/auto.webp')}
+                    resizeMode = 'contain'
+                /> 
+            <Text style={styles.titulo}>Mi Perfil</Text>
+            <Text style={styles.datos}>Username: {this.state.misDatos.username}</Text>
+            <Text style={styles.datos}>Email: {this.state.misDatos.owner}</Text>
+            <Text style={styles.datos}>Bio: {this.state.misDatos.bio}</Text>
+            <Text style={styles.datos}>Cantidad de posteos: </Text>
             <View>
             <TouchableOpacity onPress={() => this.logout()}>
-                 <Text>Cerrar sesion</Text>   
-            </TouchableOpacity>
-            
-</View>
-        </View>
+                 <Text style={styles.logout}>Cerrar sesion</Text>   
+           </TouchableOpacity>
+         </View>
+         </View>
             //Nombre de usuario
             //Email
             //Mini Bio
@@ -59,5 +64,37 @@ class Perfil extends Component {
         )
     }
 }
-
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor: '#C4D99F',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    titulo: {
+        fontFamily: 'Arial',
+        fontSize: 35,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        color:'white',
+        paddingBottom: 20
+        
+    },
+    datos: {
+        fontFamily: 'Arial',
+        fontSize: 20,
+        color: 'grey'
+    },
+    logout:{
+        fontFamily: 'Arial',
+        fontSize: 30,
+        margin: 10,
+        textAlign: 'center',
+        color: 'grey'
+    },
+    foto:{
+        height: 150,
+        width: 150
+    }
+})
 export default Perfil;

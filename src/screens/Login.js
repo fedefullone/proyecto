@@ -5,7 +5,8 @@ import {View,
         Text,
         TextInput,
         TouchableOpacity,
-        StyleSheet} from 'react-native'
+        StyleSheet,
+        Image} from 'react-native'
 
  class Login extends Component {
     constructor(){
@@ -43,15 +44,18 @@ login(email, password){
         
             render(){
                 return(
-                    <View>
+                    <View style={styles.container}>
         
-                    <Text>{this.state.error}</Text>
+        <Image 
+                    style = {styles.foto} 
+                    source = {require('../../assets/auto.webp')}
+                    resizeMode = 'contain'
+                />        
+                        <Text style={styles.titulo}>Login</Text>
         
-                        <Text>Login</Text>
-        
-                        <View>
-                        <Text>{this.state.error}</Text>
+                        <View style={styles.formulario}>
                             <TextInput 
+                            style={styles.field}
                                 placeholder= 'Email'
                                 keyboardType= 'email-address'
                                 onChangeText={ texto => this.setState({email : texto})}
@@ -59,6 +63,7 @@ login(email, password){
                                 
                             />
                             <TextInput 
+                            style={styles.field}
                                 placeholder= 'Password'
                                 keyboardType= 'default'
                                 secureTextEntry = {true}
@@ -66,25 +71,79 @@ login(email, password){
                                 value = {this.state.password}
                              
                             />            
-        
+                                <Text style={styles.error}>{this.state.error}</Text>
+
         
         {
                         this.state.email =="" || this.state.password =="" ? 
                             <TouchableOpacity>
-                                <Text>Ingresar</Text>
+                                <Text style={styles.login}>Ingresar</Text>
                             </TouchableOpacity>
                         :
                             <TouchableOpacity onPress={ () => this.login (this.state.email, this.state.password)} >
-                                <Text>Ingresar</Text>
+                                <Text style={styles.login}>Ingresar</Text>
                             </TouchableOpacity>
         }
         
-                            <Text onPress={ () => this.props.navigation.navigate ('Register')}>¿Todavia no tenés una cuenta? Registrate</Text>
                         </View>
+                        <Text style={styles.field} onPress={ () => this.props.navigation.navigate ('Register')}>¿Todavia no tenés una cuenta? Registrate</Text>
+
                     </View>
                 )
+
+                
             }
         }
+const styles = StyleSheet.create({
+            container:{
+                flex:1,
+                backgroundColor: '#C4D99F',
+                justifyContent: 'center',
+                alignItems: 'center'
+            },
+            titulo: {
+                fontFamily: 'Arial',
+                fontSize: 35,
+                fontWeight: 'bold',
+                textTransform: 'uppercase',
+                color:'white',
+                paddingBottom: 20
+                
+            },
+            formulario:{
+                backgroundColor: '#9FD9D5',
+                padding: 35,
+                border: 10
+            },
+            
+            login:{
+                fontFamily: 'Arial',
+                fontSize: 30,
+                margin: 10,
+                textAlign: 'center',
+                color: 'grey'
+            },
+            field: {
+                fontFamily: 'Arial',
+                backgroundColor: '#ECF5DB',
+                fontSize: 20,
+                margin: 10,
+                textAlign: 'center',
+                padding: 10,
+                color: 'grey',
+                borderRadius: 10
+            },
+            foto:{
+                height: 150,
+                width: 150
+            },
+            error:{
+                fontSize: 16,
+                color: 'white',
+                fontFamily: 'Arial'
+            }
+            
+        })
         
         
         export default Login;

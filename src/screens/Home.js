@@ -19,8 +19,13 @@ class Home extends Component {
     render(){
         return(
 
-            <View>
-                <Text>Home</Text> 
+            <View style={styles.container}>
+                <Image 
+                    style = {styles.foto} 
+                    source = {require('../../assets/auto.webp')}
+                    resizeMode = 'contain'
+                />
+                <Text style={styles.titulo}>Home</Text> 
              <Perfil/>
 
             </View>
@@ -28,5 +33,26 @@ class Home extends Component {
         )
     }
 }
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor: '#C4D99F',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
 
+    foto:{
+        height: 150,
+        width: 150
+    },
+    titulo: {
+        fontFamily: 'Arial',
+        fontSize: 35,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        color:'white',
+        paddingBottom: 20
+        
+    }
+})
 export default Home;
