@@ -65,16 +65,16 @@ class Perfil extends Component {
             renderItem={
                 ({item}) =>
  <View>
-           <AntDesign name="user" size={24} color="black" /> 
-           <Text style={styles.datos}>Username: {item.data.username}</Text>
-           <MaterialIcons name="email" size={24} color="black" />
-           <Text style={styles.datos}>Email: {item.data.owner}</Text>
-           <MaterialCommunityIcons name="car-info" size={24} color="black" />
-           <Text style={styles.datos}>Bio: {item.data.bio}</Text>
-           <MaterialCommunityIcons name="post" size={24} color="black" />
-           <Text style={styles.datos}>Cantidad de posteos: </Text>
+            
+           <Text style={styles.datos}> <AntDesign name="user" size={24} color="black" />Username: {item.data.username}</Text>
+           
+           <Text style={styles.datos}> <MaterialIcons name="email" size={24} color="black" />Email: {item.data.owner}</Text>
+           
+           <Text style={styles.datos}><MaterialCommunityIcons name="car-info" size={24} color="black" />Bio: {item.data.bio}</Text>
+          
+           <Text style={styles.datos}>  <MaterialCommunityIcons name="post" size={24} color="black" />Cantidad de posteos: </Text>
            <TouchableOpacity onPress={() => this.borrar()}>
-           <AntDesign name="deleteuser" size={24} color="black" /> <Text style={styles.datos}>Eliminar cuenta</Text>   
+           <Text style={styles.datos}>  <AntDesign name="deleteuser" size={24} color="black" /> Eliminar cuenta</Text>   
            </TouchableOpacity>
             </View>
             }
@@ -82,7 +82,7 @@ class Perfil extends Component {
            
             <View>
             <TouchableOpacity onPress={() => this.logout()}>
-            <MaterialIcons name="logout" size={24} color="black" /> <Text style={styles.logout}>Cerrar sesion</Text>   
+             <Text style={styles.logout}> <MaterialIcons name="logout" size={24} color="black" />Cerrar sesion</Text>   
            </TouchableOpacity>
          </View>
          </View>
