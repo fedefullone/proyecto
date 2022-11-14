@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {Text, 
+        TextInput, 
+        TouchableOpacity, 
+        View , 
+        StyleSheet} from 'react-native';
 import { auth, db } from '../firebase/config';
 
 
@@ -36,8 +40,8 @@ createPost(texto, photo){
 render(){
 
     return(
-        <View>
-            <Text> Nuevo posteo </Text>
+        <View style={styles.container}>
+            <Text style={styles.titulo} > Nuevo posteo </Text>
             <View>
                 <TextInput  
                     placeholder='texto post'
@@ -55,4 +59,21 @@ render(){
 }
 
 }
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor: '#C4D99F',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    titulo: {
+        fontFamily: 'Thonburi',
+        fontSize: 35,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        color:'white',
+        paddingBottom: 20
+        
+    }
+})
 export default NewPost;

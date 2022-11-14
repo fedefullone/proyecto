@@ -26,6 +26,14 @@ class Perfil extends Component {
         auth.signOut()
         this.props.navigation.navigate('Login')
     } 
+//Funcionalidad extra. Eliminar usuario.
+    borrar(){
+        auth.currentUser.delete()
+            .then( () => {
+                this.props.navigation.navigate('Login')
+            })
+            
+    }
 
     componentDidMount() {
         db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
@@ -63,6 +71,9 @@ class Perfil extends Component {
            <MaterialIcons name="email" size={24} color="black" /><Text style={styles.datos}>Email: {item.data.owner}</Text>
            <MaterialCommunityIcons name="car-info" size={24} color="black" /><Text style={styles.datos}>Bio: {item.data.bio}</Text>
            <MaterialCommunityIcons name="post" size={24} color="black" /><Text style={styles.datos}>Cantidad de posteos: </Text>
+           <TouchableOpacity onPress={() => this.borrar()}>
+           <AntDesign name="deleteuser" size={24} color="black" /> <Text style={styles.datos}>Eliminar cuenta</Text>   
+           </TouchableOpacity>
             </View>
             }
             />

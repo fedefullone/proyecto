@@ -1,14 +1,17 @@
-import React, {Component} from 'react';
+import React, {Component,} from 'react';
 import {auth, db} from '../firebase/config';
 import {View,
         Text,
         TextInput,
         TouchableOpacity,
         StyleSheet,
-        Image} from 'react-native'
+        Image
+        } from 'react-native'
+
 
 class Register extends Component {
     constructor(){ 
+    
         super()
         this.state = {
             email: '',
@@ -98,14 +101,13 @@ registrar(email,password, username, bio, foto){
                     onChangeText={ text => this.setState({bio:text})}
                     value={this.state.bio}
                     />
-                    <TextInput
+                   <TextInput
                     style={styles.field}
                     placeholder='Foto'
                     keyboardType='default'
                     onChangeText={ text => this.setState({foto:text})}
-                    value={this.state.bio}
+                    value={this.state.foto}
                     />
-                    
                     <Text style={styles.error}>{this.state.errors}</Text>
 
                     <TouchableOpacity onPress={() => this.registrar(this.state.email,this.state.password,this.state.username,this.state.bio,this.state.foto)}>
@@ -166,6 +168,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'white',
         fontFamily: 'Thonburi'
+    },
+    fotoperfil:{
+        width: 200,
+        height: 200
     }
     
 })
