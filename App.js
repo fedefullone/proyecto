@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
@@ -12,7 +11,6 @@ import NewPost from './src/screens/NewPost';
 import EliminarCuenta from './src/screens/EliminarCuenta';
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
 function App() {
   

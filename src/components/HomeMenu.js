@@ -1,7 +1,6 @@
 //aca implementamos el menu tab de navegacion
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../screens/home';
+import Home from '../screens/Home';
 import Perfil from '../screens/Perfil';
 import NewPost from '../screens/NewPost';
 import { FontAwesome } from '@expo/vector-icons'; 
@@ -11,7 +10,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
 
 function HomeMenu(){
 

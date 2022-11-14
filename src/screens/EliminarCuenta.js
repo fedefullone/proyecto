@@ -73,6 +73,7 @@ render(){
                     <Text style={styles.login}>Eliminar</Text>
                 </TouchableOpacity>
 }
+<Text style={styles.field} onPress={ () => this.props.navigation.navigate ('Perfil')}> Me arrepenti</Text>
 
             </View>
 

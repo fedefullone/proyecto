@@ -65,10 +65,14 @@ class Perfil extends Component {
             renderItem={
                 ({item}) =>
  <View>
-           <AntDesign name="user" size={24} color="black" /> <Text style={styles.datos}>Username: {item.data.username}</Text>
-           <MaterialIcons name="email" size={24} color="black" /><Text style={styles.datos}>Email: {item.data.owner}</Text>
-           <MaterialCommunityIcons name="car-info" size={24} color="black" /><Text style={styles.datos}>Bio: {item.data.bio}</Text>
-           <MaterialCommunityIcons name="post" size={24} color="black" /><Text style={styles.datos}>Cantidad de posteos: </Text>
+           <AntDesign name="user" size={24} color="black" /> 
+           <Text style={styles.datos}>Username: {item.data.username}</Text>
+           <MaterialIcons name="email" size={24} color="black" />
+           <Text style={styles.datos}>Email: {item.data.owner}</Text>
+           <MaterialCommunityIcons name="car-info" size={24} color="black" />
+           <Text style={styles.datos}>Bio: {item.data.bio}</Text>
+           <MaterialCommunityIcons name="post" size={24} color="black" />
+           <Text style={styles.datos}>Cantidad de posteos: </Text>
            <TouchableOpacity onPress={() => this.borrar()}>
            <AntDesign name="deleteuser" size={24} color="black" /> <Text style={styles.datos}>Eliminar cuenta</Text>   
            </TouchableOpacity>
@@ -82,14 +86,7 @@ class Perfil extends Component {
            </TouchableOpacity>
          </View>
          </View>
-            //Nombre de usuario
-            //Email
-            //Mini Bio
-            //Foto de perfil
-            //Cantidad de posteos
-            //Mostrar todos los posteos
-            //Permitir borrar posteos
-            //Boton logout --> redirige a login
+        
 
         )
     }
