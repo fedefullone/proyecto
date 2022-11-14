@@ -9,6 +9,7 @@ import Home from './src/screens/Home';
 import Perfil from './src/screens/Perfil';
 import HomeMenu from './src/components/HomeMenu';
 import NewPost from './src/screens/NewPost';
+import EliminarCuenta from './src/screens/EliminarCuenta';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,6 +26,8 @@ function App() {
         <Stack.Screen name="Perfil" component={ Perfil } options={{headerShown: false}} />
         <Stack.Screen name="HomeMenu" component={ HomeMenu } options={{headerShown: false}} />
         <Stack.Screen name="NewPost" component={ NewPost } options={{headerShown: false}} />
+        <Stack.Screen name="EliminarCuenta" component={ EliminarCuenta } options={{headerShown: false}} />
+
 
         </Stack.Navigator>
       </NavigationContainer>

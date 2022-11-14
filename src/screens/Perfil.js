@@ -28,12 +28,10 @@ class Perfil extends Component {
     } 
 //Funcionalidad extra. Eliminar usuario.
     borrar(){
-        auth.currentUser.delete()
-            .then( () => {
-                this.props.navigation.navigate('Login')
-            })
+                this.props.navigation.navigate('EliminarCuenta')
+            }
             
-    }
+    
 
     componentDidMount() {
         db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
