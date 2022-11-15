@@ -9,6 +9,9 @@ import Perfil from './src/screens/Perfil';
 import HomeMenu from './src/components/HomeMenu';
 import NewPost from './src/screens/NewPost';
 import EliminarCuenta from './src/screens/EliminarCuenta';
+import Buscador from './src/screens/Buscador';
+import PerfilOtro from './src/components/PerfilOtro';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -25,8 +28,8 @@ function App() {
         <Stack.Screen name="HomeMenu" component={ HomeMenu } options={{headerShown: false}} />
         <Stack.Screen name="NewPost" component={ NewPost } options={{headerShown: false}} />
         <Stack.Screen name="EliminarCuenta" component={ EliminarCuenta } options={{headerShown: false}} />
-
-
+        <Stack.Screen name="Buscador" component={ Buscador } options={{headerShown: false}} />
+        <Stack.Screen name="PerfilOtro" component={ PerfilOtro } options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     );
