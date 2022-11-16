@@ -19,7 +19,7 @@ class NewPost extends Component {
 
 createPost(texto, photo){
     db.collection('posts').add({
-        owner: 'federico@federico.com', //deberia ser el usuario registrado. auth.currentUser
+        owner:  auth.currentUser.email, //deberia ser el usuario registrado. auth.currentUser
         textoPost: texto,
         photo: photo,
         likes: [],
