@@ -4,7 +4,8 @@ import {
     View,
     TouchableOpacity,
     StyleSheet,
-    Image
+    Image,
+    FlatList,
 } from 'react-native'
 import { auth, db } from '../firebase/config';
 import Post from '../components/Post';
@@ -19,7 +20,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        db.collection('posts').where('email', '==', 'ale@dh.com').onSnapshot(
+        db.collection('posts').onSnapshot(
             docs => {
                 let posts = [];
                 docs.forEach(doc => {

@@ -29,6 +29,7 @@ createPost(texto, photo){
     then(() => {
         this.setState({
             texto:'',
+            likes: [],
         })
         this.props.navigation.navigate('Home')
     })
