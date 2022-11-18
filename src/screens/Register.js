@@ -7,6 +7,7 @@ import {View,
         StyleSheet,
         Image
         } from 'react-native'
+import Camara from '../components/Camara';
 
 
 class Register extends Component {
@@ -19,11 +20,17 @@ class Register extends Component {
             username: '',
             bio: '',
             foto: '',
-            errors: ''
+            errors: '',
+            mostrarCamara: false,
     }
 }
 
-
+onImageUpload(url){
+    this.setState({
+        foto: url,
+        mostrarCamara: false,
+    })
+}
 registrar(email,password, username, bio, foto){
     if (this.state.email === '') {
         this.setState({ errors: 'Tiene que ingresar un email' })
@@ -101,13 +108,16 @@ registrar(email,password, username, bio, foto){
                     onChangeText={ text => this.setState({bio:text})}
                     value={this.state.bio}
                     />
-                   <TextInput
-                    style={styles.field}
-                    placeholder='Foto'
-                    keyboardType='default'
-                    onChangeText={ text => this.setState({foto:text})}
-                    value={this.state.foto}
-                    />
+                   {
+                        this.state.mostrarCamara ?
+                        <View style={styles.formulario}>
+                            <Camara onImageUpload={url => this.onImageUpload(url)} style={{width: "40vw", heigth: "40vh", alignItems: 'center'}}/> 
+                        </View> 
+                        :
+                        <TouchableOpacity onPress={()=> this.setState({mostrarCamara:true})}>
+                            <Text style={styles.login2} > Subir foto </Text>
+                        </TouchableOpacity>
+                    }
                     <Text style={styles.error}>{this.state.errors}</Text>
 
                     <TouchableOpacity onPress={() => this.registrar(this.state.email,this.state.password,this.state.username,this.state.bio,this.state.foto)}>
@@ -172,7 +182,14 @@ const styles = StyleSheet.create({
     fotoperfil:{
         width: 200,
         height: 200
-    }
+    },
+    login2:{
+        fontFamily: 'Thonburi',
+        fontSize: 20,
+        margin: 10,
+        textAlign: 'center',
+        color: 'grey'
+    },
     
 })
 export default Register;

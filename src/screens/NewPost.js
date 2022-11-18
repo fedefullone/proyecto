@@ -5,6 +5,7 @@ import {Text,
         View , 
         StyleSheet} from 'react-native';
 import { auth, db } from '../firebase/config';
+import Camara from '../components/Camara'
 
 
 class NewPost extends Component {
@@ -13,7 +14,8 @@ class NewPost extends Component {
         this.state = {
             createdAt: '',
             textoPost: '',
-            photo: ''
+            photo: '',
+            showCamera: true,
         }
     }
 
@@ -28,34 +30,50 @@ createPost(texto, photo){
     })
     then(() => {
         this.setState({
-            texto:'',
-            likes: [],
+            textoPost:'',
+            showCamera: true,
         })
         this.props.navigation.navigate('Home')
     })
     .catch( e => console.log(e))
 }
 
+onImageUpload(url){
+    this.setState({
+        photo:url,
+        showCamera: false,
+    })
+}
 
 
 render(){
 
     return(
+        <View>
+        <Text style={styles.titulo} > Nuevo posteo </Text>
+                {
+                this.state.showCamera ?
+                       <Camara onImageUpload={(url) => this.onImageUpload(url)} /> 
+                    :      
         <View style={styles.container}>
-            <Text style={styles.titulo} > Nuevo posteo </Text>
-            <View>
+         <Text style={styles.titulo} > Nuevo posteo </Text>
+            <View style={styles.formulario}>
                 <TextInput  
-                    placeholder='texto post'
+                style={styles.field}
+                    placeholder='Texto post'
                     keyboardType='default'
                     //falta la propiedad para transformarlo en textArea que dijo ale en la clase 
                     onChangeText={ text => this.setState({textoPost:text}) }
                     value={this.state.textoPost}
                 /> 
+                
                 <TouchableOpacity onPress={()=>this.createPost(this.state.textoPost, this.state.photo)}>
-                    <Text>Guardar</Text>
+                    <Text style={styles.login}>Guardar</Text>
                 </TouchableOpacity>
             </View>
+        </View>}
         </View>
+
     )
 }
 
@@ -75,6 +93,28 @@ const styles = StyleSheet.create({
         color:'white',
         paddingBottom: 20
         
+    },
+    login:{
+        fontFamily: 'Thonburi',
+        fontSize: 30,
+        margin: 10,
+        textAlign: 'center',
+        color: 'grey'
+    },
+    field: {
+        fontFamily: 'Thonburi',
+        backgroundColor: '#ECF5DB',
+        fontSize: 20,
+        margin: 10,
+        textAlign: 'center',
+        padding: 10,
+        color: 'grey',
+        borderRadius: 10
+    },
+    formulario:{
+        backgroundColor: '#9FD9D5',
+        padding: 35,
+        border: 10
     }
 })
 export default NewPost;

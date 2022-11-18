@@ -64,7 +64,7 @@ class Perfil extends Component {
             keyExtractor={(item) => item.id.toString()}
             renderItem={
                 ({item}) =>
- <View>
+ <View style={styles.formulario}>
             
            <Text style={styles.datos}> <AntDesign name="user" size={24} color="black" />Username: {item.data.username}</Text>
            
@@ -122,6 +122,11 @@ const styles = StyleSheet.create({
     foto:{
         height: 150,
         width: 150
-    }
+    },
+    formulario:{
+        backgroundColor: '#9FD9D5',
+        padding: 35,
+        border: 10
+    },
 })
 export default Perfil;
