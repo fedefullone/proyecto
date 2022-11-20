@@ -6,6 +6,7 @@ import {Text,
         StyleSheet,
         Image } from 'react-native'
 import {auth, db} from '../firebase/config';
+import Post from '../components/Post';
 //Iconos
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
@@ -18,6 +19,7 @@ class Perfil extends Component {
         super();
         this.state = { 
             misDatos:{},
+            posts:[],
             id:''
         }
     }
@@ -48,7 +50,23 @@ class Perfil extends Component {
                 })
             }
         )
+        db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
+            docs => {
+                let posts = [];
+                docs.forEach(doc => {
+                    posts.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        posts: posts
+                    })
+                })
+            }
+        )
+        
     }
+    
     render(){
         return(
 
@@ -59,6 +77,7 @@ class Perfil extends Component {
                     resizeMode = 'contain'
                 /> 
             <Text style={styles.titulo}>Mi Perfil</Text>
+            <View style={styles.container2}>
             <FlatList
             data={this.state.misDatos}
             keyExtractor={(item) => item.id.toString()}
@@ -80,24 +99,40 @@ class Perfil extends Component {
                     style = {styles.foto2} 
                     source={{ uri: item.data.foto }}
                     resizeMode = 'contain'
-                />            </View>
+                />   
+</View>
             }
-            />
-           
-            <View>
+            /></View>
+    <View>
             <TouchableOpacity onPress={() => this.logout()}>
              <Text style={styles.logout}> <MaterialIcons name="logout" size={24} color="black" />Cerrar sesion</Text>   
            </TouchableOpacity>
-         </View>
-         </View>
-        
-
+    </View>
+    <View style={styles.container3}>
+         <FlatList
+                    data={this.state.posts}
+                    keyExtractor={onePost => onePost.id.toString()}
+                    renderItem={({ item }) => <Post postData={item} />} />  
+        </View>
+</View>
         )
     }
 }
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        backgroundColor: '#C4D99F',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    container2:{
+        flex:2,
+        backgroundColor: '#C4D99F',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    container3:{
+        flex:3,
         backgroundColor: '#C4D99F',
         justifyContent: 'center',
         alignItems: 'center'
@@ -130,7 +165,7 @@ const styles = StyleSheet.create({
     formulario:{
         backgroundColor: '#9FD9D5',
         padding: 35,
-        border: 10
+        border: 10,
     },
     foto2:{
         height: 250,
