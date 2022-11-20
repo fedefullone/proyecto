@@ -16,6 +16,8 @@ class NewPost extends Component {
             textoPost: '',
             photo: '',
             showCamera: true,
+            likes: [],
+            comments: [],
         }
     }
 
@@ -28,10 +30,14 @@ createPost(texto, photo){
         comments: [],
         createdAt: Date.now()
     })
-    then(() => {
+    .then(() => {
         this.setState({
             textoPost:'',
             showCamera: true,
+            createdAt: '',
+            photo: '',
+            likes: [],
+            comments: [],
         })
         this.props.navigation.navigate('Home')
     })
@@ -49,7 +55,7 @@ onImageUpload(url){
 render(){
 
     return(
-        <View>
+        <View style={styles.container}>
         <Text style={styles.titulo} > Nuevo posteo </Text>
                 {
                 this.state.showCamera ?

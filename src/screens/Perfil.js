@@ -76,7 +76,11 @@ class Perfil extends Component {
            <TouchableOpacity onPress={() => this.borrar()}>
            <Text style={styles.datos}>  <AntDesign name="deleteuser" size={24} color="black" /> Eliminar cuenta</Text>   
            </TouchableOpacity>
-            </View>
+           <Image 
+                    style = {styles.foto2} 
+                    source={{ uri: item.data.foto }}
+                    resizeMode = 'contain'
+                />            </View>
             }
             />
            
@@ -127,6 +131,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#9FD9D5',
         padding: 35,
         border: 10
+    },
+    foto2:{
+        height: 250,
+        width: 200
     },
 })
 export default Perfil;

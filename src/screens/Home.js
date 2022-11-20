@@ -20,7 +20,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        db.collection('posts').where('email', '==', 'ale@dh.com').onSnapshot(
+        db.collection('posts').orderBy("createdAt","desc" ).onSnapshot(
             docs => {
                 let posts = [];
                 docs.forEach(doc => {
@@ -47,7 +47,6 @@ class Home extends Component {
                     resizeMode='contain'
                 />
                 <Text style={styles.titulo}>Home</Text>
-                <Text> Lista de posteos </Text>
                 <FlatList
                     data={this.state.posts}
                     keyExtractor={onePost => onePost.id.toString()}

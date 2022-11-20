@@ -13,28 +13,20 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
-class Perfil extends Component {
-    constructor(){
-        super();
+class PerfilOtro extends Component {
+    constructor(props){
+        super(PushSubscriptionOptions);
         this.state = { 
-            misDatos:{},
-            id:''
+           user:[],
+           posts: [],
+           email:'',
+           bio:'',
+           foto:''
         }
     }
 
-    logout() {
-        auth.signOut()
-        this.props.navigation.navigate('Login')
-    } 
-//Funcionalidad extra. Eliminar usuario.
-    borrar(){
-                this.props.navigation.navigate('EliminarCuenta')
-            }
-            
-    
-
     componentDidMount() {
-        db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
+        db.collection('users').where('owner', '==', this.props.route.params.email).onSnapshot(
             docs => {
                 let datos = [];
                 docs.forEach(doc => {
@@ -43,12 +35,26 @@ class Perfil extends Component {
                         data: doc.data()
                     })
                     this.setState({
-                        misDatos: datos
+                        posts: datos,
                     })
                 })
             }
         )
-    }
+        db.collection('users').where("owner", "==", this.props.route.params.email).onSnapshot(
+            docs => {
+                let user = [];
+                docs.forEach( doc => {
+                    user.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        user: user[0].data
+                    })
+                }) 
+            }
+        )
+    }    
     render(){
         return(
 
@@ -66,16 +72,19 @@ class Perfil extends Component {
                 ({item}) =>
  <View>
             
-           <Text style={styles.datos}> <AntDesign name="user" size={24} color="black" />Username: {item.data.username}</Text>
+           <Text style={styles.datos}> <AntDesign name="user" size={24} color="black" />Username: {this.state.user.username}</Text>
            
-           <Text style={styles.datos}> <MaterialIcons name="email" size={24} color="black" />Email: {item.data.owner}</Text>
+           <Text style={styles.datos}> <MaterialIcons name="email" size={24} color="black" />Email: {this.state.user.owner}</Text>
            
-           <Text style={styles.datos}><MaterialCommunityIcons name="car-info" size={24} color="black" />Bio: {item.data.bio}</Text>
+           <Text style={styles.datos}><MaterialCommunityIcons name="car-info" size={24} color="black" />Bio: {this.state.user.bio}</Text>
           
-           <Text style={styles.datos}>  <MaterialCommunityIcons name="post" size={24} color="black" />Cantidad de posteos: </Text>
-           <TouchableOpacity onPress={() => this.borrar()}>
-           <Text style={styles.datos}>  <AntDesign name="deleteuser" size={24} color="black" /> Eliminar cuenta</Text>   
-           </TouchableOpacity>
+           <Text style={styles.datos}>  <MaterialCommunityIcons name="post" size={24} color="black" />Cantidad de posteos: {this.state.user.posts.length}</Text>
+           
+           <Image 
+                    style = {styles.foto2} 
+                    source={{ uri: this.state.user.foto }}
+                    resizeMode = 'contain'
+                /> 
             </View>
             }
             />
@@ -122,6 +131,10 @@ const styles = StyleSheet.create({
     foto:{
         height: 150,
         width: 150
-    }
+    },
+    foto2:{
+        height: 250,
+        width: 200
+    },
 })
-export default Perfil;
+export default PerfilOtro;

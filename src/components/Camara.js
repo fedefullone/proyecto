@@ -19,7 +19,7 @@ class Camara extends Component {
         Camera.requestCameraPermissionsAsync()
         .then(()=>{
              this.setState({
-                 permission: true,
+                 permissions: true,
              })
         })
         .catch( e => console.log(e))          
@@ -61,7 +61,7 @@ class Camara extends Component {
         return(
             <View>
             {
-                this.state.permission ? 
+                this.state.permissions ? 
                     this.state.showCamera ?
                     <View style={styles.cameraBody}>
                         <Camera
@@ -98,7 +98,8 @@ class Camara extends Component {
 };
 const styles = StyleSheet.create({
     cameraBody: {
-        height: '80vh',
+        height: '60vh',
+        width: '60vh'
     },
     button:{
         height: '20vh',
