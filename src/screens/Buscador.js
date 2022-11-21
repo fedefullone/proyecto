@@ -58,7 +58,7 @@ render(){
                         data={this.state.susDatos}
                         keyExtractor={ unUsuario => unUsuario.id.toString()}
                         renderItem={ ({item})  => 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('PerfilOtro')}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('PerfilOtro',{email: item.data.owner})}>
                         <Text>{item.data.username == '' ? 'No existe ese username' : item.data.username }</Text></TouchableOpacity>}
                     /> 
         </View>

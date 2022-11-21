@@ -6,6 +6,7 @@ import {Text,
         StyleSheet,
         Image } from 'react-native'
 import {auth, db} from '../firebase/config';
+import Post from './Post';
 //Iconos
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
@@ -14,11 +15,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 class PerfilOtro extends Component {
-    constructor(props){
-        super(PushSubscriptionOptions);
+    constructor(){
+        super();
         this.state = { 
            user:[],
            posts: [],
+           username: '',
            email:'',
            bio:'',
            foto:''
@@ -35,21 +37,25 @@ class PerfilOtro extends Component {
                         data: doc.data()
                     })
                     this.setState({
-                        posts: datos,
-                    })
+                        user: datos[0],
+                        username: datos[0].data.username,
+                        email:datos[0].data.owner,
+                        bio:datos[0].data.bio,
+                        foto:datos[0].data.foto
+                                        })
                 })
             }
         )
-        db.collection('users').where("owner", "==", this.props.route.params.email).onSnapshot(
+        db.collection('posts').where("owner", "==", this.props.route.params.email).orderBy('createdAt', 'desc').onSnapshot(
             docs => {
-                let user = [];
+                let posts = [];
                 docs.forEach( doc => {
-                    user.push({
+                    posts.push({
                         id: doc.id,
                         data: doc.data()
                     })
                     this.setState({
-                        user: user[0].data
+                        posts: posts
                     })
                 }) 
             }
@@ -64,35 +70,32 @@ class PerfilOtro extends Component {
                     source = {require('../../assets/auto.webp')}
                     resizeMode = 'contain'
                 /> 
-            <Text style={styles.titulo}>Mi Perfil</Text>
-            <FlatList
-            data={this.state.misDatos}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={
-                ({item}) =>
- <View>
-            
-           <Text style={styles.datos}> <AntDesign name="user" size={24} color="black" />Username: {this.state.user.username}</Text>
+            <Text style={styles.titulo}>Su Perfil</Text>
+            <View style={styles.container2}>
            
-           <Text style={styles.datos}> <MaterialIcons name="email" size={24} color="black" />Email: {this.state.user.owner}</Text>
+            <View style={styles.formulario}>            
+           <Text style={styles.datos}> <AntDesign name="user" size={24} color="black" />Username: {this.state.username}</Text>
            
-           <Text style={styles.datos}><MaterialCommunityIcons name="car-info" size={24} color="black" />Bio: {this.state.user.bio}</Text>
+           <Text style={styles.datos}> <MaterialIcons name="email" size={24} color="black" />Email: {this.state.email}</Text>
+           
+           <Text style={styles.datos}><MaterialCommunityIcons name="car-info" size={24} color="black" />Bio: {this.state.bio}</Text>
           
-           <Text style={styles.datos}>  <MaterialCommunityIcons name="post" size={24} color="black" />Cantidad de posteos: {this.state.user.posts.length}</Text>
+           <Text style={styles.datos}>  <MaterialCommunityIcons name="post" size={24} color="black" />Cantidad de posteos: {this.state.posts.length}</Text>
            
            <Image 
                     style = {styles.foto2} 
-                    source={{ uri: this.state.user.foto }}
+                    source={{ uri: this.state.foto }}
                     resizeMode = 'contain'
                 /> 
             </View>
-            }
-            />
+            
            
-            <View>
-            <TouchableOpacity onPress={() => this.logout()}>
-             <Text style={styles.logout}> <MaterialIcons name="logout" size={24} color="black" />Cerrar sesion</Text>   
-           </TouchableOpacity>
+           <View style={styles.container3}>
+         <FlatList
+                    data={this.state.posts}
+                    keyExtractor={onePost => onePost.id.toString()}
+                    renderItem={({ item }) => <Post postData={item} />} />             
+         </View>
          </View>
          </View>
         
@@ -103,6 +106,17 @@ class PerfilOtro extends Component {
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        backgroundColor: '#C4D99F',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    container2:{
+        backgroundColor: '#C4D99F',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    container3:{
+        flex: 2,
         backgroundColor: '#C4D99F',
         justifyContent: 'center',
         alignItems: 'center'
@@ -135,6 +149,11 @@ const styles = StyleSheet.create({
     foto2:{
         height: 250,
         width: 200
+    },
+    formulario:{
+        backgroundColor: '#9FD9D5',
+        padding: 35,
+        border: 10,
     },
 })
 export default PerfilOtro;
