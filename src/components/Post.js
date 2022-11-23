@@ -30,6 +30,7 @@ class Post extends Component {
                 miLike: true
             })
         }
+        console.log(this.props.postData)
     }
 
     like() {
@@ -48,38 +49,57 @@ class Post extends Component {
     }
     unlike() {
         db.collection('posts')
-        .doc(this.props.postData.id) //identificar el documento
-        .update({
-            likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
-        })
-        .then(() => this.setState({
-            cantidadDeLikes: this.state.cantidadDeLikes - 1,
-            miLike: false,
-        })
-        )
-        .catch(e => console.log(e))    }
+            .doc(this.props.postData.id) //identificar el documento
+            .update({
+                likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+            })
+            .then(() => this.setState({
+                cantidadDeLikes: this.state.cantidadDeLikes - 1,
+                miLike: false,
+            })
+            )
+            .catch(e => console.log(e))
+    }
+
+    borrarPosteo() {
+        db.collection('posts')
+            .doc(this.props.postData.id)
+            .delete()
+            .then( () => {
+                this.props.navigation.navigate('Perfil')
+            })
+
+    }
 
 
     render() {
         return (
-            <View style = {styles.container} >
-                <Image 
-                    style = {styles.foto} 
+            <View style={styles.container} >
+                <Image
+                    style={styles.foto}
                     source={{ uri: this.props.postData.data.photo }}
-                    resizeMode = 'contain'
-                />       
-            
-                <Text style = {styles.datos2}> {this.props.postData.data.textoPost} </Text>
+                    resizeMode='contain'
+                />
 
-                <Text style = {styles.datos}>Likes: {this.state.cantidadDeLikes} </Text>
+                <Text style={styles.datos2}> {this.props.postData.data.textoPost} </Text>
+
+                <Text style={styles.datos}>Likes: {this.state.cantidadDeLikes} </Text>
                 {this.state.miLike ?
                     <TouchableOpacity onPress={() => this.unlike()}>
-                        <Text style = {styles.login2}>Ya no me gusta </Text>
+                        <Text style={styles.login2}>Ya no me gusta </Text>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity onPress={() => this.like()}>
-                        <Text style = {styles.login2}>Me gusta</Text>
+                        <Text style={styles.login2}>Me gusta</Text>
                     </TouchableOpacity>
+                }
+                {this.props.postData.data.owner == auth.currentUser.email ?
+                    <TouchableOpacity onPress={() => this.borrarPosteo()}>
+                        <Text style={styles.login2}>Borrar posteo</Text>
+
+                    </TouchableOpacity>
+                    :
+                    ''
                 }
             </View>
         )
@@ -87,13 +107,13 @@ class Post extends Component {
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         backgroundColor: '#9FD9D5',
         justifyContent: 'center',
         alignItems: 'center'
     },
-    foto:{
+    foto: {
         height: 400,
         width: 350
     },
@@ -102,7 +122,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#55706E'
     },
-    login2:{
+    login2: {
         fontFamily: 'Thonburi',
         fontSize: 20,
         margin: 10,
@@ -114,7 +134,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#55706E'
     },
-    
-    
+
+
 })
 export default Post;
