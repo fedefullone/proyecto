@@ -17,17 +17,17 @@ class NewPost extends Component {
             photo: '',
             showCamera: true,
             likes: [],
-            comments: [],
+            comentarios: [],
         }
     }
 
 createPost(texto, photo){
     db.collection('posts').add({
-        owner:  auth.currentUser.email, //deberia ser el usuario registrado. auth.currentUser
+        owner:  auth.currentUser.email, 
         textoPost: texto,
         photo: photo,
         likes: [],
-        comments: [],
+        comentarios: this.state.comentarios,
         createdAt: Date.now()
     })
     .then(() => {
@@ -37,7 +37,7 @@ createPost(texto, photo){
             createdAt: '',
             photo: '',
             likes: [],
-            comments: [],
+            comentarios: [],
         })
         this.props.navigation.navigate('Home')
     })

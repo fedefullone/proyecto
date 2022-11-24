@@ -20,6 +20,7 @@ class Post extends Component {
         this.state = {
             cantidadDeLikes: this.props.postData.data.likes.length,
             miLike: false,
+            comentarios: this.props.postData.data.comentarios,
         }
     }
 
@@ -65,7 +66,7 @@ class Post extends Component {
         db.collection('posts')
             .doc(this.props.postData.id)
             .delete()
-            .then( () => {
+            .then(() => {
                 this.props.navigation.navigate('Perfil')
             })
 
@@ -93,6 +94,10 @@ class Post extends Component {
                         <Text style={styles.login2}>Me gusta</Text>
                     </TouchableOpacity>
                 }
+
+
+
+
                 {this.props.postData.data.owner == auth.currentUser.email ?
                     <TouchableOpacity onPress={() => this.borrarPosteo()}>
                         <Text style={styles.login2}>Borrar posteo</Text>
@@ -101,6 +106,11 @@ class Post extends Component {
                     :
                     ''
                 }
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentarios", { id: this.props.postData.id })}>
+                    <Text style={styles.login2}> Comentarios: </Text>
+                </TouchableOpacity>
+
+                
             </View>
         )
     }
