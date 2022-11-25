@@ -17,53 +17,51 @@ class EliminarCuenta extends Component {
                 }
     }
 
-    borrar(email, password){
-        auth.signInWithEmailAndPassword(email, password)
-            .then( res => {
-                auth.currentUser.delete()
-                .then( () => {
-                        this.props.navigation.navigate('Login')
-                    })
+borrar(email, password){
+    auth.signInWithEmailAndPassword(email, password)
+        .then( res => {
+            auth.currentUser.delete()
+            .then( () => {
+                    this.props.navigation.navigate('Login')
                 })
-                    .catch(error => {
-                        this.setState({error: 'Credenciales inválidas.'})
-                      })
-            }
+            })
+                .catch(error => {
+                    this.setState({error: 'Credenciales inválidas.'})
+                    })
+        }
 
 
 render(){
     return(
-        <View style={styles.container}>
+<View style={styles.container}>
 
-<Image 
+    <Image 
         style = {styles.foto} 
         source = {require('../../assets/auto.webp')}
         resizeMode = 'contain'
     />        
-            <Text style={styles.titulo}>Valide sus datos para eliminar la cuenta</Text>
+        <Text style={styles.titulo}>Valide sus datos para eliminar la cuenta</Text>
 
-            <View style={styles.formulario}>
-                <TextInput 
+    <View style={styles.formulario}>
+            <TextInput 
                 style={styles.field}
-                    placeholder= 'Email'
-                    keyboardType= 'email-address'
-                    onChangeText={ texto => this.setState({email : texto})}
-                    value = {this.state.email}
-                    
-                />
-                <TextInput 
-                style={styles.field}
-                    placeholder= 'Password'
-                    keyboardType= 'default'
-                    secureTextEntry = {true}
-                    onChangeText={ texto => this.setState({password : texto})}
-                    value = {this.state.password}
-                 
-                />            
-                    <Text style={styles.error}>{this.state.error}</Text>
+                placeholder= 'Email'
+                keyboardType= 'email-address'
+                onChangeText={ texto => this.setState({email : texto})}
+                value = {this.state.email} 
+            />
+            <TextInput 
+            style={styles.field}
+            placeholder= 'Password'
+            keyboardType= 'default'
+            secureTextEntry = {true}
+            onChangeText={ texto => this.setState({password : texto})}
+            value = {this.state.password}
+            />            
+                <Text style={styles.error}>{this.state.error}</Text>
 
 
-{
+            {
             this.state.email =="" || this.state.password =="" ? 
                 <TouchableOpacity>
                     <Text style={styles.login}>Eliminar</Text>
@@ -72,12 +70,13 @@ render(){
                 <TouchableOpacity onPress={ () => this.borrar (this.state.email, this.state.password)} >
                     <Text style={styles.login}>Eliminar</Text>
                 </TouchableOpacity>
-}
-<Text style={styles.field} onPress={ () => this.props.navigation.navigate ('Perfil')}> Me arrepenti</Text>
+            }
+            
+            <Text style={styles.field} onPress={ () => this.props.navigation.navigate ('Perfil')}> Me arrepenti</Text>
 
-            </View>
+    </View>
 
-        </View>
+</View>
     )
 
     

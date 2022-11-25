@@ -19,43 +19,44 @@ class Home extends Component {
         }
     }
 
-    componentDidMount() {
-        db.collection('posts').orderBy("createdAt","desc" ).onSnapshot(
-            docs => {
-                let posts = [];
-                docs.forEach(doc => {
-                    posts.push({
-                        id: doc.id,
-                        data: doc.data()
-                    })
-                    this.setState({
-                        posts: posts
-                    })
+componentDidMount() {
+    db.collection('posts').orderBy("createdAt","desc" ).onSnapshot(
+        docs => {
+            let posts = [];
+            docs.forEach(doc => {
+                posts.push({
+                    id: doc.id,
+                    data: doc.data()
                 })
+                this.setState({
+                    posts: posts
+                })
+            })
 
-            }
-        )
-    }
+        }
+    )
+}
 
-    render() {
-        return (
+render() {
+    return (
 
-            <View style={styles.container}>
-                <Image
-                    style={styles.foto}
-                    source={require('../../assets/auto.webp')}
-                    resizeMode='contain'
-                />
-                <Text style={styles.titulo}>Home</Text>
-                <FlatList
-                    data={this.state.posts}
-                    keyExtractor={onePost => onePost.id.toString()}
-                    renderItem={({ item }) => <Post postData={item} />} />  
+<View style={styles.container}>
+    <Image
+        style={styles.foto}
+        source={require('../../assets/auto.webp')}
+        resizeMode='contain'
+    />
+        <Text style={styles.titulo}>Home</Text>
+    <FlatList
+        data={this.state.posts}
+        keyExtractor={onePost => onePost.id.toString()}
+        renderItem={({ item }) => <Post postData={item} navigation={this.props.navigation}/>} 
+    />  
 
-            </View>
+ </View>
 
-        )
-    }
+    )
+}
 }
 const styles = StyleSheet.create({
     container: {

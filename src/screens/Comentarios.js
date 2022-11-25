@@ -4,33 +4,78 @@ import {Text,
         TouchableOpacity,
         StyleSheet,
         Image,
-        TextInput } from 'react-native'
+        TextInput,
+    FlatList } from 'react-native'
 import {auth, db} from '../firebase/config';
+import firebase from "firebase";
+
 
 
 class Comentarios extends Component {
     constructor(props){
         super(props);
         this.state = {
-            id: this.props.route.params.id,
-            comentario: "",
-            comentarios: [],
+            comentarios: [], 
+            comentario: '', 
+            data: '', 
+            id: this.props.route.params.id 
 
 
                 }
     }
+componentDidMount(){
+    db.collection('posts').doc(this.state.id).onSnapshot(
+        docs => {
+            this.setState({
+                comentarios: docs.data().comentarios
+            })
+        })
+};
 
-    render(){
-return(
-<View>
-<Text> hola</Text>
-</View>
-)
+comentar(comentario){
+    db.collection('posts')
+    .doc(this.state.id)
+    .update({
+        comentarios: firebase.firestore.FieldValue.arrayUnion({owner:auth.currentUser.email,comentario:comentario,createdAt: Date.now()})  
+})
+.then(() => {
+    this.setState({
+        comentario: "",     
+}) })
+}
+render(){
+    return(
+<View style={styles.container}>
 
+    {this.state.comentarios.length === 0 ?
+        <View > 
+            <Text style={styles.datos}>Todavia nadie comento</Text>  
+        </View>
+        :
+        <FlatList style={styles.datos}
+            data={this.state.comentarios}
+            keyExtractor={ unComentario => unComentario.createdAt.toString()}
+            renderItem={({item}) => <Text style={styles.datos}>{item.owner} Su comentario: {item.comentario}</Text>}
+        />
     }
-
-    
-   }
+        <TextInput style={styles.field}
+            placeholder='Ingrese comentario'
+            keyboardType='default'
+            onChangeText={comentario=> this.setState({comentario:comentario})}
+            value={this.state.comentario}
+        />
+        
+        {this.state.comentario === '' ?
+            <></>
+            :
+            <TouchableOpacity onPress={()=> this.comentar(this.state.comentario) }>
+                <Text style={styles.login}>Ingresar comentario</Text>
+            </TouchableOpacity> 
+        } 
+</View>
+    );
+}
+};
    const styles = StyleSheet.create({
     container:{
         flex:1,
@@ -40,7 +85,7 @@ return(
     },
     titulo: {
         fontFamily: 'Thonburi',
-        fontSize: 16,
+        fontSize: 30,
         fontWeight: 'bold',
         textTransform: 'uppercase',
         color:'white',
@@ -48,6 +93,11 @@ return(
         paddingLeft: 33,
 
         
+    },
+    datos: {
+        fontFamily: 'Thonburi',
+        fontSize: 18,
+        color: '#55706E'
     },
     formulario:{
         backgroundColor: '#9FD9D5',

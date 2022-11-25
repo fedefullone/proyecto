@@ -15,86 +15,86 @@ class Camara extends Component {
        }
        this.metodosDeCamara = ''
     }
-    componentDidMount(){
-        Camera.requestCameraPermissionsAsync()
-        .then(()=>{
-             this.setState({
-                 permissions: true,
-             })
-        })
-        .catch( e => console.log(e))          
-    }
-    takePicture(){
-        this.metodosDeCamara.takePictureAsync()
-         .then(photo => {
+componentDidMount(){
+    Camera.requestCameraPermissionsAsync()
+    .then(()=>{
             this.setState({
-              photo: photo.uri, //Es una uri interna temporal de la foto.
-              showCamera:false
+                permissions: true,
             })
-        })
-      }
-      savePhoto(){
-        fetch(this.state.photo)
-         .then(res=>res.blob())
-         .then(image =>{
-           const refStorage=storage.ref(`photos/${Date.now()}.jpg`)
-           refStorage.put(image)
-                .then(()=>{
-                   refStorage.getDownloadURL()
-                        .then(url => {
-                            this.props.onImageUpload(url);
-                         })
-                 })
-         })
-         .catch(e=>console.log(e))
-       }
-       clearPhoto(){
+    })
+    .catch( e => console.log(e))          
+}
+takePicture(){
+    this.metodosDeCamara.takePictureAsync()
+        .then(photo => {
         this.setState({
-            photo:'',
-            showCamera: true
+            photo: photo.uri, //Es una uri interna temporal de la foto.
+            showCamera:false
         })
-       }
+    })
+    }
+savePhoto(){
+    fetch(this.state.photo)
+        .then(res=>res.blob())
+        .then(image =>{
+        const refStorage=storage.ref(`photos/${Date.now()}.jpg`)
+        refStorage.put(image)
+        .then(()=>{
+            refStorage.getDownloadURL()
+                .then(url => {
+                    this.props.onImageUpload(url);
+                    })
+            })
+    })
+    .catch(e=>console.log(e))
+}
+clearPhoto(){
+    this.setState({
+        photo:'',
+        showCamera: true
+    })
+}
              
     
 
-    render(){
-        return(
-            <View>
-            {
-                this.state.permissions ? 
-                    this.state.showCamera ?
-                    <View style={styles.cameraBody}>
-                        <Camera
-                            style={styles.cameraBody}
-                            type = {Camera.Constants.Type.front}
-                            ref={metodosDeCamara => this.metodosDeCamara = metodosDeCamara }
-                        />
-                        <TouchableOpacity style={styles.button} onPress={()=>this.takePicture()}>
-                            <Text style={styles.login}>Sacar foto</Text>
-                        </TouchableOpacity>
-                    </View>
-            :
-            <View>
-                <Image style={styles.preview}
-                source={ {uri:this.state.photo} }
-                resizeMode = 'cover'
-                />
-                
-                <View style={styles.button}>
+render(){
+    return(
+<View>
+        {
+        this.state.permissions ? 
+            this.state.showCamera ?
+                <View style={styles.cameraBody}>
+                    <Camera
+                        style={styles.cameraBody}
+                        type = {Camera.Constants.Type.front}
+                        ref={metodosDeCamara => this.metodosDeCamara = metodosDeCamara }
+                    />
+                    <TouchableOpacity style={styles.button} onPress={()=>this.takePicture()}>
+                        <Text style={styles.login}>Sacar foto</Text>
+                    </TouchableOpacity>
+                </View>
+        :
+        <View>
+            <Image style={styles.preview}
+            source={ {uri:this.state.photo} }
+            resizeMode = 'cover'
+            />
+            
+            <View style={styles.button}>
                 <TouchableOpacity onPress={()=>this.savePhoto()}>
-                <Text style={styles.login}>Aceptar</Text>
+                    <Text style={styles.login}>Aceptar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>this.clearPhoto()}>
-                <Text style={styles.login}>Rechazar</Text>
+                    <Text style={styles.login}>Rechazar</Text>
                 </TouchableOpacity>
-                </View>
             </View>
-            :
-            <Text style={styles.datos}>No tengo permisos</Text>
-            }
-            </View>
-        );
+        </View>
+        :
+        <Text style={styles.datos}>No tengo permisos</Text>
         }
+</View>
+    );
+    }
 };
 const styles = StyleSheet.create({
     cameraBody: {

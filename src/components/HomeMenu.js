@@ -28,5 +28,4 @@ function HomeMenu(){
     )
 
 }
-//Falta redireccion a crear posteo
 export default HomeMenu;

@@ -28,72 +28,71 @@ login(email, password){
                       })
             }
             
-            componentDidMount(){ 
-                auth.onAuthStateChanged(
-                 user => {
-                    if (user){
-                        this.props.navigation.navigate('HomeMenu')
-                    }
-                 })
+componentDidMount(){ 
+    auth.onAuthStateChanged(
+        user => {
+        if (user){
+            this.props.navigation.navigate('HomeMenu')
+        }
+        })
+}
+
+        
+        
+        
+        
+        
+render(){
+    return(
+<View style={styles.container}>
+
+    <Image 
+        style = {styles.foto} 
+        source = {require('../../assets/auto.webp')}
+        resizeMode = 'contain'
+    />        
+     <Text style={styles.titulo}>Login</Text>
+
+    <View style={styles.formulario}>
+         <TextInput 
+            style={styles.field}
+            placeholder= 'Email'
+            keyboardType= 'email-address'
+            onChangeText={ texto => this.setState({email : texto})}
+            value = {this.state.email}
+        />
+        <TextInput 
+            style={styles.field}
+            placeholder= 'Password'
+            keyboardType= 'default'
+            secureTextEntry = {true}
+            onChangeText={ texto => this.setState({password : texto})}
+            value = {this.state.password}
+        />            
+            
+         <Text style={styles.error}>{this.state.error}</Text>
+
+
+            {
+            this.state.email =="" || this.state.password =="" ? 
+                <TouchableOpacity>
+                    <Text style={styles.login}>Ingresar</Text>
+                </TouchableOpacity>
+            :
+                <TouchableOpacity onPress={ () => this.login (this.state.email, this.state.password)} >
+                    <Text style={styles.login}>Ingresar</Text>
+                </TouchableOpacity>
             }
 
-        
-        
-        
-        
-        
-            render(){
-                return(
-                    <View style={styles.container}>
-        
-        <Image 
-                    style = {styles.foto} 
-                    source = {require('../../assets/auto.webp')}
-                    resizeMode = 'contain'
-                />        
-                        <Text style={styles.titulo}>Login</Text>
-        
-                        <View style={styles.formulario}>
-                            <TextInput 
-                            style={styles.field}
-                                placeholder= 'Email'
-                                keyboardType= 'email-address'
-                                onChangeText={ texto => this.setState({email : texto})}
-                                value = {this.state.email}
-                                
-                            />
-                            <TextInput 
-                            style={styles.field}
-                                placeholder= 'Password'
-                                keyboardType= 'default'
-                                secureTextEntry = {true}
-                                onChangeText={ texto => this.setState({password : texto})}
-                                value = {this.state.password}
-                             
-                            />            
-                                <Text style={styles.error}>{this.state.error}</Text>
+    </View>
+            <Text style={styles.field} onPress={ () => this.props.navigation.navigate ('Register')}>¿Todavia no tenés una cuenta? Registrate</Text>
 
-        
-        {
-                        this.state.email =="" || this.state.password =="" ? 
-                            <TouchableOpacity>
-                                <Text style={styles.login}>Ingresar</Text>
-                            </TouchableOpacity>
-                        :
-                            <TouchableOpacity onPress={ () => this.login (this.state.email, this.state.password)} >
-                                <Text style={styles.login}>Ingresar</Text>
-                            </TouchableOpacity>
-        }
-        
-                        </View>
-                        <Text style={styles.field} onPress={ () => this.props.navigation.navigate ('Register')}>¿Todavia no tenés una cuenta? Registrate</Text>
+</View>
+    )
 
-                    </View>
-                )
-
-                
-            }
-        }
+    
+}
+}
 const styles = StyleSheet.create({
             container:{
                 flex:1,

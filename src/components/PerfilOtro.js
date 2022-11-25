@@ -27,96 +27,99 @@ class PerfilOtro extends Component {
         }
     }
 
-    componentDidMount() {
-        db.collection('users').where('owner', '==', this.props.route.params.email).onSnapshot(
-            docs => {
-                let datos = [];
-                docs.forEach(doc => {
-                    datos.push({
-                        id: doc.id,
-                        data: doc.data()
-                    })
-                    this.setState({
-                        user: datos[0],
-                        username: datos[0].data.username,
-                        email:datos[0].data.owner,
-                        bio:datos[0].data.bio,
-                        foto:datos[0].data.foto
-                                        })
+componentDidMount() {
+    db.collection('users').where('owner', '==', this.props.route.params.email).onSnapshot(
+        docs => {
+            let datos = [];
+            docs.forEach(doc => {
+                datos.push({
+                    id: doc.id,
+                    data: doc.data()
                 })
-            }
-        )
-        db.collection('posts').where("owner", "==", this.props.route.params.email).orderBy('createdAt', 'desc').onSnapshot(
-            docs => {
-                let posts = [];
-                docs.forEach( doc => {
-                    posts.push({
-                        id: doc.id,
-                        data: doc.data()
-                    })
-                    this.setState({
-                        posts: posts
-                    })
-                }) 
-            }
-        )
-    }    
-    render(){
-        return(
-
-            <View style={styles.container}>
-                <Image 
-                    style = {styles.foto} 
-                    source = {require('../../assets/auto.webp')}
-                    resizeMode = 'contain'
-                /> 
-            <Text style={styles.titulo}>Su Perfil</Text>
-            <View style={styles.container2}>
-           
-            <View style={styles.formulario}>            
-           <Text style={styles.datos}> <AntDesign name="user" size={24} color="black" />Username: {this.state.username}</Text>
-           
-           <Text style={styles.datos}> <MaterialIcons name="email" size={24} color="black" />Email: {this.state.email}</Text>
-           
-           <Text style={styles.datos}><MaterialCommunityIcons name="car-info" size={24} color="black" />Bio: {this.state.bio}</Text>
-          
-           <Text style={styles.datos}>  <MaterialCommunityIcons name="post" size={24} color="black" />Cantidad de posteos: {this.state.posts.length}</Text>
-           
-           <Image 
-                    style = {styles.foto2} 
-                    source={{ uri: this.state.foto }}
-                    resizeMode = 'contain'
-                /> 
-            </View>
-            
-           
-           <View style={styles.container3}>
-         <FlatList
-                    data={this.state.posts}
-                    keyExtractor={onePost => onePost.id.toString()}
-                    renderItem={({ item }) => <Post postData={item} />} />             
-         </View>
-         </View>
-         </View>
-        
-
-        )
+                this.setState({
+                    user: datos[0],
+                    username: datos[0].data.username,
+                    email:datos[0].data.owner,
+                    bio:datos[0].data.bio,
+                    foto:datos[0].data.foto
+                                    })
+            })
+        }
+    )
+db.collection('posts').where("owner", "==", this.props.route.params.email).orderBy('createdAt', 'desc').onSnapshot(
+    docs => {
+        let posts = [];
+        docs.forEach( doc => {
+            posts.push({
+                id: doc.id,
+                data: doc.data()
+            })
+            this.setState({
+                posts: posts
+            })
+        }) 
     }
+)
+}    
+render(){
+    return(
+
+<View style={styles.container}>
+    <Image 
+        style = {styles.foto} 
+        source = {require('../../assets/auto.webp')}
+        resizeMode = 'contain'
+    /> 
+        <Text style={styles.titulo}>Su Perfil</Text>
+
+    <View style={styles.container2}>
+        
+        <View style={styles.formulario}>            
+            <Text style={styles.datos}> <AntDesign name="user" size={24} color="black" />Username: {this.state.username}</Text>
+        
+            <Text style={styles.datos}> <MaterialIcons name="email" size={24} color="black" />Email: {this.state.email}</Text>
+        
+            <Text style={styles.datos}><MaterialCommunityIcons name="car-info" size={24} color="black" />Bio: {this.state.bio}</Text>
+        
+            <Text style={styles.datos}>  <MaterialCommunityIcons name="post" size={24} color="black" />Cantidad de posteos: {this.state.posts.length}</Text>
+        
+            <Image 
+                style = {styles.foto2} 
+                source={{ uri: this.state.foto }}
+                resizeMode = 'contain'
+            /> 
+        </View>
+        
+    </View>
+
+        
+        <View style={styles.container3}>
+            <FlatList
+                data={this.state.posts}
+                keyExtractor={onePost => onePost.id.toString()}
+                renderItem={({ item }) => <Post postData={item} navigation={this.props.navigation} />} 
+            />             
+        </View>
+</View>
+    
+
+    )
+}
 }
 const styles = StyleSheet.create({
     container:{
-        flex:1,
         backgroundColor: '#C4D99F',
         justifyContent: 'center',
         alignItems: 'center'
     },
     container2:{
+        flex:1,
         backgroundColor: '#C4D99F',
         justifyContent: 'center',
         alignItems: 'center'
     },
     container3:{
-        flex: 2,
+        flex:2,
         backgroundColor: '#C4D99F',
         justifyContent: 'center',
         alignItems: 'center'

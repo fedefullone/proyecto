@@ -39,7 +39,7 @@ buscar(text){
 
 render(){
     return(
-        <View style={styles.container}>
+<View style={styles.container}>
     
     <Text style={styles.titulo}>Buscador</Text>
 
@@ -54,15 +54,16 @@ render(){
             <TouchableOpacity onPress={()=>this.buscar(this.state.text)}>
                         <Text style={styles.login}>Buscar</Text>
             </TouchableOpacity>
+
             <FlatList 
-                        data={this.state.susDatos}
-                        keyExtractor={ unUsuario => unUsuario.id.toString()}
-                        renderItem={ ({item})  => 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('PerfilOtro',{email: item.data.owner})}>
-                        <Text>{item.data.username == '' ? 'No existe ese username' : item.data.username }</Text></TouchableOpacity>}
-                    /> 
-        </View>
-        </View>
+                data={this.state.susDatos}
+                keyExtractor={ unUsuario => unUsuario.id.toString()}
+                renderItem={ ({item})  => 
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('PerfilOtro',{email: item.data.owner})}>
+                <Text>{item.data.username == '' ? 'No existe ese username' : item.data.username }</Text></TouchableOpacity>}
+            /> 
+    </View>
+</View>
         )
 
 }

@@ -53,32 +53,32 @@ onImageUpload(url){
 
 
 render(){
-
     return(
-        <View style={styles.container}>
-        <Text style={styles.titulo} > Nuevo posteo </Text>
-                {
-                this.state.showCamera ?
-                       <Camara onImageUpload={(url) => this.onImageUpload(url)} /> 
-                    :      
-        <View style={styles.container}>
-         <Text style={styles.titulo} > Nuevo posteo </Text>
-            <View style={styles.formulario}>
-                <TextInput  
-                style={styles.field}
-                    placeholder='Texto post'
-                    keyboardType='default'
-                    //falta la propiedad para transformarlo en textArea que dijo ale en la clase 
-                    onChangeText={ text => this.setState({textoPost:text}) }
-                    value={this.state.textoPost}
-                /> 
+
+<View style={styles.container}>
+    <Text style={styles.titulo} > Nuevo posteo </Text>
+        {
+            this.state.showCamera ?
+            <Camara onImageUpload={(url) => this.onImageUpload(url)} /> 
+            :      
+            <View style={styles.container}>
+                <Text style={styles.titulo} > Nuevo posteo </Text>
+                <View style={styles.formulario}>
+                    <TextInput  
+                        style={styles.field}
+                        placeholder='Texto post'
+                        keyboardType='default'
+                        onChangeText={ text => this.setState({textoPost:text}) }
+                        value={this.state.textoPost}
+                    /> 
                 
                 <TouchableOpacity onPress={()=>this.createPost(this.state.textoPost, this.state.photo)}>
                     <Text style={styles.login}>Guardar</Text>
                 </TouchableOpacity>
-            </View>
-        </View>}
-        </View>
+
+                </View>
+            </View>}
+</View>
 
     )
 }

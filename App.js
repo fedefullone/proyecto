@@ -30,8 +30,8 @@ function App() {
         <Stack.Screen name="NewPost" component={ NewPost } options={{headerShown: false}} />
         <Stack.Screen name="EliminarCuenta" component={ EliminarCuenta } options={{headerShown: false}} />
         <Stack.Screen name="Buscador" component={ Buscador } options={{headerShown: false}} />
-        <Stack.Screen name="PerfilOtro" component={ PerfilOtro } options={{headerShown: false}} />
-        <Stack.Screen name="Comentarios" component={ Comentarios } options={{headerShown: false}} />
+        <Stack.Screen name="PerfilOtro" component={ PerfilOtro }  />
+        <Stack.Screen name="Comentarios" component={ Comentarios }  />
         </Stack.Navigator>
       </NavigationContainer>
     );

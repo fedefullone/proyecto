@@ -67,66 +67,71 @@ registrar(email,password, username, bio, foto){
         })
         )}}
 
-    render(){
-        return(
-            
-            <View style={styles.container}> 
-             <Image 
-                    style = {styles.foto} 
-                    source = {require('../../assets/auto.webp')}
-                    resizeMode = 'contain'
+render(){
+    return(
 
-                />
-                <Text style={styles.titulo}>Registro</Text>
-                <View style={styles.formulario}>
-                    <TextInput
-                    style={styles.field}
-                    placeholder='Email'
-                    keyboardType='email-address'
-                    onChangeText={ text => this.setState({email:text})}
-                    value={this.state.email}
-                    />
-                    <TextInput
-                    style={styles.field}
-                    placeholder='Password'
-                    keyboardType='default'
-                    onChangeText={ text => this.setState({password:text})}
-                    value={this.state.password}
-                    secureTextEntry = {true}
-                    />
-                    <TextInput
-                    style={styles.field}
-                    placeholder='Username'
-                    keyboardType='default'
-                    onChangeText={ text => this.setState({username:text})}
-                    value={this.state.username}
-                    />
-                    <TextInput
-                    style={styles.field}
-                    placeholder='Bio'
-                    keyboardType='default'
-                    onChangeText={ text => this.setState({bio:text})}
-                    value={this.state.bio}
-                    />
-                   {
-                        this.state.mostrarCamara ?
-                        <View style={styles.formulario}>
-                            <Camara onImageUpload={url => this.onImageUpload(url)} style={{width: "40vw", heigth: "40vh", alignItems: 'center'}}/> 
-                        </View> 
-                        :
-                        <TouchableOpacity onPress={()=> this.setState({mostrarCamara:true})}>
-                            <Text style={styles.login2} > Subir foto </Text>
-                        </TouchableOpacity>
-                    }
-                    <Text style={styles.error}>{this.state.errors}</Text>
+<View style={styles.container}> 
+        <Image 
+            style = {styles.foto} 
+            source = {require('../../assets/auto.webp')}
+            resizeMode = 'contain'
+        />
 
-                    <TouchableOpacity onPress={() => this.registrar(this.state.email,this.state.password,this.state.username,this.state.bio,this.state.foto)}>
-                        <Text style={styles.login}> Registrar </Text> 
-                    </TouchableOpacity> 
+        <Text style={styles.titulo}>Registro</Text>
 
-                </View>
-                <Text style={styles.field} onPress={ () => this.props.navigation.navigate ('Login')}> ¿Ya tenes cuenta? Ingresa</Text>
-            </View>
+    <View style={styles.formulario}>
+
+        <TextInput
+        style={styles.field}
+        placeholder='Email'
+        keyboardType='email-address'
+        onChangeText={ text => this.setState({email:text})}
+        value={this.state.email}
+        />
+        <TextInput
+        style={styles.field}
+        placeholder='Password'
+        keyboardType='default'
+        onChangeText={ text => this.setState({password:text})}
+        value={this.state.password}
+        secureTextEntry = {true}
+        />
+        <TextInput
+        style={styles.field}
+        placeholder='Username'
+        keyboardType='default'
+        onChangeText={ text => this.setState({username:text})}
+        value={this.state.username}
+        />
+        <TextInput
+        style={styles.field}
+        placeholder='Bio'
+        keyboardType='default'
+        onChangeText={ text => this.setState({bio:text})}
+        value={this.state.bio}
+        />
+            {
+        this.state.mostrarCamara ?
+            <View style={styles.formulario}>
+                <Camara onImageUpload={url => this.onImageUpload(url)} style={{width: "40vw", heigth: "40vh", alignItems: 'center'}}/> 
+            </View> 
+        :
+            <TouchableOpacity onPress={()=> this.setState({mostrarCamara:true})}>
+                <Text style={styles.login2} > Subir foto </Text>
+            </TouchableOpacity>
+            }
+
+        <Text style={styles.error}>{this.state.errors}</Text>
+
+        <TouchableOpacity onPress={() => this.registrar(this.state.email,this.state.password,this.state.username,this.state.bio,this.state.foto)}>
+            <Text style={styles.login}> Registrar </Text> 
+        </TouchableOpacity> 
+
+    </View>
+
+        <Text style={styles.field} onPress={ () => this.props.navigation.navigate ('Login')}> ¿Ya tenes cuenta? Ingresa</Text>
+    
+    </View>
         )
         }
 }
